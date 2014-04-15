@@ -1,0 +1,38 @@
+{
+  "name": "gulp-jslint",
+  "version": "0.0.1",
+  "description": "JSLint for Gulp.js.",
+  "main": "gulp.jslint.min.js",
+  "dependencies": {
+    "colors": "~0.6.2",
+    "event-stream": "~3.1.2",
+    "gulp": "~3.6.0",
+    "gulp-concat": "~2.2.0",
+    "gulp-uglify": "~0.2.1",
+    "napa": "~0.4.1"
+  },
+  "devDependencies": {
+    "colors": "~0.6.2",
+    "gulp-concat": "~2.2.0",
+    "gulp": "~3.6.0",
+    "gulp-uglify": "~0.2.1"
+  },
+  "scripts": {
+    "test": "gulp",
+    "preinstall": "napa douglascrockford/JSLint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/karimsa/gulp-jslint.git"
+  },
+  "keywords": [
+    "gulp",
+    "jslint",
+    "lint"
+  ],
+  "author": "Karim Alibhai",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/karimsa/gulp-jslint/issues"
+  }
+}

@@ -1,7 +1,7 @@
 # gulp-jslint [![Build Status](https://travis-ci.org/karimsa/gulp-jslint.svg?branch=master)](https://travis-ci.org/karimsa/gulp-jslint)
 It's JSLint for Gulp.js.
 
-*I wasn't able to find such a plugin, so here. If you find one and think it's better, let me know and I'll get rid of this.*
+[![NPM](https://nodei.co/npm/gulp-jslint.png?downloads=true&stars=true)](https://nodei.co/npm/gulp-jslint/)
 
 ## Usage
 

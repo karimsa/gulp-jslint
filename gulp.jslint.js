@@ -2,7 +2,6 @@
  * gulp.jslint.js
  * Copyright (C) 2014 KarimSa Networks.
  **/
-/*globals JSLINT*/
 
 (function (global) {
     "use strict";

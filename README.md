@@ -9,6 +9,7 @@ To install with npm, simply do:
 
 ```
 $ npm install gulp-jslint
+.. installs gulp-jslint ..
 ```
 
 Sample Gulpfile.js:
@@ -25,6 +26,8 @@ gulp.task('default', function () {
             .pipe(gulp.dest('built'));
 });
 ```
+
+For a list of directives, see [the official JSLint docs](http://www.jslint.com/lint.html).
 
 ## Custom Install
 To build from source, simply do the following:

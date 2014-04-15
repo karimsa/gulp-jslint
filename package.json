@@ -19,6 +19,7 @@
   },
   "scripts": {
     "test": "gulp",
+    "preinstall": "npm install -g napa gulp",
     "postinstall": "napa douglascrockford/JSLint"
   },
   "repository": {
@@ -27,6 +28,7 @@
   },
   "keywords": [
     "gulp",
+    "gulpplugin",
     "jslint",
     "lint"
   ],

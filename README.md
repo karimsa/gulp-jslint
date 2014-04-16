@@ -21,7 +21,23 @@ var uglify = require('gulp-uglify');
 
 gulp.task('default', function () {
     return gulp.src(['my_files.js'])
-            .pipe(jslint(/* pass all directives as an object here */))
+            .pipe(jslint({
+                // pass all directives as an object here
+                // like so:
+                
+                nomen: true,
+                white: true,
+                
+                // specify your own reporter module
+                // (by-name), or use the built-in one:
+                
+                reporter: 'default'
+                
+                // ^ there's no need to tell gulp-jslint
+                // to use the default reporter. If there is
+                // no reporter specified, gulp-jslint will use
+                // its own.
+            }))
             .pipe(uglify())
             .pipe(gulp.dest('built'));
 });

@@ -1,12 +1,13 @@
 {
   "name": "gulp-jslint",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "The classic and strict javascript lint-tool for gulp.js",
   "main": "gulp.jslint.min.js",
   "dependencies": {
     "event-stream": "~3.1.2",
     "gulp": "~3.6.0",
-    "napa": "~0.4.1"
+    "napa": "~0.4.1",
+    "colors": "~0.6.2"
   },
   "devDependencies": {
     "colors": "~0.6.2",

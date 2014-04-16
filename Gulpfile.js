@@ -8,10 +8,6 @@
 (function () {
     "use strict";
 
-    // import colors to use 'red'
-    // (adds to String.prototype)
-    require('colors');
-
     var gulp = require('gulp'),
         jslint = require('./gulp.jslint.min.js'),
         uglify = require('gulp-uglify'),

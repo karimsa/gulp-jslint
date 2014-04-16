@@ -14,7 +14,7 @@ $ npm install gulp-jslint
 
 Sample Gulpfile.js:
 
-```
+```javascript
 var gulp = require('gulp');
 var jslint = require('gulp-jslint');
 var uglify = require('gulp-uglify');

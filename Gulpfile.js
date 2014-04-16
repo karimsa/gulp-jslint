@@ -15,37 +15,34 @@
     var gulp = require('gulp'),
         jslint = require('./gulp.jslint.min.js'),
         uglify = require('gulp-uglify'),
-        concat = require('gulp-concat'),
+        concat = require('gulp-concat');
 
-        // prepare an error handler
-        // (or use this)
-        onFail = function (err) {
-            console.error(String(err).red);
-            process.exit(-1);
-        };
+    // test our Gulpfile in a separate task,
+    // to maintain gulp's streaming output.
+    gulp.task('gulpfile', function () {
+        return gulp.src(['Gulpfile.js']).pipe(jslint({ node: true }));
+    });
 
-    gulp.task('default', function () {
-        gulp.src(['Gulpfile.js'])
-            .pipe(jslint({ node: true }))
-            .on('error', onFail);
-
-        // remember to keep gulp
-        // chaining and streaming.
+    // build the main source into the min file
+    // and use the last working minified version
+    // to lint the current.
+    gulp.task('default', ['gulpfile'], function () {
         return gulp.src(['gulp.jslint.js'])
 
             // pass your directives
             // as an object
             .pipe(jslint({
+                // these directives can
+                // be found in the official
+                // JSLint documentation.
                 node: true,
                 evil: true,
-                nomen: true
-            }))
+                nomen: true,
 
-            // handle failures on your own
-            // see (on github):
-            //  - gulpjs/gulp#113
-            //  - spenceralger/gulp-jshint#10
-            .on('error', onFail)
+                // pass in your prefered
+                // reporter like so:
+                reporter: 'default'
+            }))
 
             // do your other things
             .pipe(uglify({ output: { comments: /copyright/i } }))

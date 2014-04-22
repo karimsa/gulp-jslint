@@ -13,7 +13,7 @@
         path = require('path'),
         evtStr = require('event-stream'),
         initLint = function (fn) {
-            var lintPath = path.resolve(__dirname, './node_modules/JSLint/jslint.js');
+            var lintPath = path.resolve(__dirname, './node_modules/jslint/lib/jslint-latest.js');
 
             fs.readFile(lintPath, 'utf8', function (err, jslintjs) {
                 if (err) {

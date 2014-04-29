@@ -37,7 +37,7 @@
                         src.jslint = {};
 
                         if (err || !global.JSLINT) {
-                            myRet = fn(err || 'jslint: failed to load JSLINT.');
+                            myRet = fn(err || 'gulp-jslint: failed to load JSLINT.');
                         } else {
                             // convert to string
                             js = src.contents.toString('utf8');
@@ -97,7 +97,7 @@
                     };
 
                 if (src.isStream()) {
-                    retVal = fn(new Error('jslint: bad file input.'));
+                    retVal = fn(new Error('gulp-jslint: bad file input.'));
                 } else {
                     if (!src.isNull()) {
                         if (!global.JSLINT) {

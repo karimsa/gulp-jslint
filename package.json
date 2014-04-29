@@ -5,13 +5,11 @@
   "main": "gulp.jslint.min.js",
   "dependencies": {
     "event-stream": "~3.1.2",
-    "gulp": "~3.6.0",
     "napa": "~0.4.1",
     "colors": "~0.6.2"
   },
   "devDependencies": {
     "colors": "~0.6.2",
-    "gulp": "~3.6.0",
     "gulp-concat": "~2.2.0",
     "gulp-uglify": "~0.2.1"
   },

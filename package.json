@@ -1,12 +1,12 @@
 {
   "name": "gulp-jslint",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "The classic and strict javascript lint-tool for gulp.js",
   "main": "gulp.jslint.min.js",
   "dependencies": {
+    "jslint": "~0.2.5",
     "event-stream": "~3.1.2",
     "gulp": "~3.6.0",
-    "napa": "~0.4.1",
     "colors": "~0.6.2"
   },
   "devDependencies": {
@@ -16,9 +16,7 @@
     "gulp-uglify": "~0.2.1"
   },
   "scripts": {
-    "test": "gulp",
-    "preinstall": "npm install -g napa gulp",
-    "postinstall": "napa douglascrockford/JSLint"
+    "test": "gulp"
   },
   "repository": {
     "type": "git",
@@ -28,7 +26,8 @@
     "gulp",
     "gulpplugin",
     "jslint",
-    "lint"
+    "lint",
+    "code quality"
   ],
   "author": "Karim Alibhai",
   "license": "MIT",

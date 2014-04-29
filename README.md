@@ -31,7 +31,8 @@ gulp.task('default', function () {
                 // specify your own reporter module
                 // (by-name), or use the built-in one:
                 
-                reporter: 'default'
+                reporter: 'default',
+                errorsOnly: false
                 
                 // ^ there's no need to tell gulp-jslint
                 // to use the default reporter. If there is
@@ -42,6 +43,8 @@ gulp.task('default', function () {
             .pipe(gulp.dest('built'));
 });
 ```
+
+When not specified, the default reporter will write a pass/fail message to the console with every file.  If you only wish to see errors, set the `errorsOnly` property to `true`.  *Note:* The `errorsOnly` property only affects the default reporter.
 
 For a list of directives, see [the official JSLint docs](http://www.jslint.com/lint.html).
 

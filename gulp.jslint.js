@@ -74,7 +74,9 @@
                                 process.exit(-1);
                             } else {
                                 if (options.reporter === 'default') {
-                                    console.log('[%s] %s', 'PASS'.green, src.path.replace(path.resolve(__dirname) + '/', '').cyan);
+                                    if (!options.errorsOnly) {
+                                        console.log('[%s] %s', 'PASS'.green, src.path.replace(path.resolve(__dirname) + '/', '').cyan);
+                                    }
                                 } else {
                                     try {
                                         // grab the reporter

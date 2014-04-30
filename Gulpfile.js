@@ -9,7 +9,7 @@
     "use strict";
 
     var gulp = require('gulp'),
-        jslint = require('./gulp.jslint.min.js'),
+        jslint = require('./gulp.jslint.js'),
         uglify = require('gulp-uglify'),
         concat = require('gulp-concat');
 

@@ -4,7 +4,7 @@
   "description": "The classic and strict javascript lint-tool for gulp.js",
   "main": "gulp.jslint.min.js",
   "dependencies": {
-    "jslint": "~0.2.5",
+    "jslint": "~0.3.4",
     "event-stream": "~3.1.2",
     "colors": "~0.6.2"
   },
@@ -12,7 +12,7 @@
     "colors": "~0.6.2",
     "gulp": "~3.6.0",
     "gulp-concat": "~2.2.0",
-    "gulp-uglify": "~0.2.1"
+    "gulp-uglify": "~0.3.0"
   },
   "scripts": {
     "test": "gulp"

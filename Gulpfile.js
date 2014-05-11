@@ -32,8 +32,6 @@
                 // be found in the official
                 // JSLint documentation.
                 node: true,
-                evil: true,
-                nomen: true,
 
                 // pass in your prefered
                 // reporter like so:

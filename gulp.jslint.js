@@ -9,29 +9,12 @@
 // load up colorful strings
 require('colors');
 
+var util = require('util');
+
 var fs = require('fs'),
     path = require('path'),
-    evtStr = require('event-stream');
-
-function initLint(fn) {
-    /*jslint nomen:true*/ // Node.JS's built-in __dirname
-    var lintPath = path.resolve(__dirname, './node_modules/jslint/lib/jslint-latest.js');
-    /*jslint nomen:false*/
-
-    fs.readFile(lintPath, 'utf8', function (err, jslintjs) {
-        if (err) {
-            fn(err);
-        } else {
-            // hope JSLINT is not "evil"
-            /*jslint evil:true*/ // need to initialise JSLint from source
-            eval(jslintjs + '; global.JSLINT = JSLINT; ');
-            /*jslint evil:false*/
-
-            // launch callback
-            fn(null);
-        }
-    });
-}
+    evtStr = require('event-stream'),
+    jslint = require('jslint');
 
 function doLint(options) {
     return function (src, fn) {
@@ -111,10 +94,9 @@ function doLint(options) {
         } else {
             if (!src.isNull()) {
                 if (!global.JSLINT) {
-                    retVal = initLint(lint);
-                } else {
-                    retVal = lint(null);
+                    global.JSLINT = jslint.load('latest');
                 }
+                retVal = lint(null);
             }
 
             return retVal;

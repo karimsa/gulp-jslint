@@ -3,30 +3,16 @@
  * Copyright (C) 2014 KarimSa Networks.
  **/
 
-(function (global) {
+(function () {
     "use strict";
 
     // load up colorful strings
     require('colors');
 
-    var fs = require('fs'),
-        path = require('path'),
+    var path = require('path'),
         evtStr = require('event-stream'),
-        initLint = function (fn) {
-            var lintPath = path.resolve(__dirname, './node_modules/jslint/lib/jslint-latest.js');
-
-            fs.readFile(lintPath, 'utf8', function (err, jslintjs) {
-                if (err) {
-                    fn(err);
-                } else {
-                    // hope JSLINT is not "evil"
-                    eval(jslintjs + '; global.JSLINT = JSLINT; ');
-
-                    // launch callback
-                    fn(null);
-                }
-            });
-        },
+        jslint = require('jslint'),
+        JSLINT = null,
         doLint = function (options) {
             return function (src, fn) {
                 var retVal, js, error, i,
@@ -36,25 +22,25 @@
                         // prepare for linting exports
                         src.jslint = {};
 
-                        if (err || !global.JSLINT) {
+                        if (err || !JSLINT) {
                             myRet = fn(err || 'gulp-jslint: failed to load JSLINT.');
                         } else {
                             // convert to string
                             js = src.contents.toString('utf8');
 
                             // lint the file
-                            src.jslint.edition = global.JSLINT.edition;
-                            src.jslint.success = global.JSLINT(js, options);
-                            src.jslint.errors = global.JSLINT.errors;
+                            src.jslint.edition = JSLINT.edition;
+                            src.jslint.success = JSLINT(js, options);
+                            src.jslint.errors = JSLINT.errors;
 
                             // reporter handling
                             if (!src.jslint.success) {
                                 if (options.reporter === 'default') {
                                     error = '[FAIL] ' + src.path.replace(path.resolve(__dirname) + '/', '');
 
-                                    for (i = 0; i < global.JSLINT.errors.length; i += 1) {
-                                        if (global.JSLINT.errors[i]) {
-                                            error += '\n       line ' + global.JSLINT.errors[i].line + ', col ' + global.JSLINT.errors[i].character + ': ' + global.JSLINT.errors[i].reason;
+                                    for (i = 0; i < JSLINT.errors.length; i += 1) {
+                                        if (JSLINT.errors[i]) {
+                                            error += '\n       line ' + JSLINT.errors[i].line + ', col ' + JSLINT.errors[i].character + ': ' + JSLINT.errors[i].reason;
                                         }
                                     }
 
@@ -74,7 +60,7 @@
                                 process.exit(-1);
                             } else {
                                 if (options.reporter === 'default') {
-                                    if (!options.errorsOnly) {
+                                    if (options.errorsOnly !== true) {
                                         console.log('[%s] %s', 'PASS'.green, src.path.replace(path.resolve(__dirname) + '/', '').cyan);
                                     }
                                 } else {
@@ -100,11 +86,11 @@
                     retVal = fn(new Error('gulp-jslint: bad file input.'));
                 } else {
                     if (!src.isNull()) {
-                        if (!global.JSLINT) {
-                            retVal = initLint(lint);
-                        } else {
-                            retVal = lint(null);
+                        if (JSLINT === null) {
+                            JSLINT = jslint.load('latest');
                         }
+
+                        retVal = lint(null);
                     }
 
                     return retVal;
@@ -119,7 +105,10 @@
         // set default reporter
         options.reporter = options.reporter || 'default';
 
+        // force boolean
+        options.errorsOnly = options.hasOwnProperty('errorsOnly') && options.errorsOnly === true;
+
         // begin linting
         return evtStr.map(doLint(options));
     };
-}(this));
+}());

@@ -9,9 +9,7 @@
     "use strict";
 
     var gulp = require('gulp'),
-        jslint = require('./gulp.jslint.min.js'),
-        uglify = require('gulp-uglify'),
-        concat = require('gulp-concat');
+        jslint = require('./gulp.jslint.js');
 
     // test our Gulpfile in a separate task,
     // to maintain gulp's streaming output.
@@ -37,12 +35,12 @@
 
                 // pass in your prefered
                 // reporter like so:
-                reporter: 'default'
-            }))
+                reporter: 'default',
 
-            // do your other things
-            .pipe(uglify({ output: { comments: /copyright/i } }))
-            .pipe(concat('gulp.jslint.min.js'))
-            .pipe(gulp.dest('./'));
+                // specify whether or not
+                // to show 'PASS' messages
+                // for built-in reporter
+                errorsOnly: false
+            }));
     });
 }());

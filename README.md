@@ -58,7 +58,7 @@ $ cd gulp-jslint
 $ npm install
 .. installs dependencies ..
 $ gulp
-.. builds gulp-jslint into gulp.jslint.min.js ..
+.. lints and tests gulp-jslint code ..
 ```
 
 ## Support

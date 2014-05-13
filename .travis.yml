@@ -5,7 +5,7 @@ deploy:
   provider: npm
   email: k4rim.sa@gmail.com
   api_key:
-    secure: JJe4yS197Ucy5Kq1tX8/bm3rN/DjPy8GLWZhLFFu+IfphiZmU5orBUkXbFOgNn6qcFieEQQSltwreKXtgmjGyTSWdfZ8nb9a3M0ipEnCCjxsDnyT+yc1DY/Dmnlw89DsQXiMHwRVDkb2/JZd4hLYy64SyMslaNW7t7CFjIyoEsY=
+    secure: GwyyvMipxxU9wwrQgO50nVtV3RHjtlIw+zynCvHyFsqiwz/KmlpgxwEQ4CDL2ZbN+njN2VTJAU5HwKxqpo+TbNKPDECPNgPxBrGPdSvlazXvvBRL1g6RzBUxopZlvhETNjgP3Iv1RjVCl1Jt5aH+bSVojqjRBmIhZKWBqq+fs5E=
   on:
-    repo: karimsa/gulp-jslint
     tags: true
+    repo: karimsa/gulp-jslint

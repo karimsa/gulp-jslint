@@ -57,7 +57,7 @@
                                     }
                                 }
 
-                                process.exit(-1);
+                                fn('gulp-jslint: failed to lint file.');
                             } else {
                                 if (options.reporter === 'default') {
                                     if (options.errorsOnly !== true) {

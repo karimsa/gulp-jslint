@@ -15,30 +15,46 @@ Sample Gulpfile.js:
 ```javascript
 var gulp = require('gulp');
 var jslint = require('gulp-jslint');
-var uglify = require('gulp-uglify');
 
+// build the main source into the min file
+// and use the last working minified version
+// to lint the current.
 gulp.task('default', function () {
-    return gulp.src(['my_files.js'])
-            .pipe(jslint({
-                // pass all directives as an object here
-                // like so:
-                
-                nomen: true,
-                white: true,
-                
-                // specify your own reporter module
-                // (by-name), or use the built-in one:
-                
-                reporter: 'default',
-                errorsOnly: false
-                
-                // ^ there's no need to tell gulp-jslint
-                // to use the default reporter. If there is
-                // no reporter specified, gulp-jslint will use
-                // its own.
-            }))
-            .pipe(uglify())
-            .pipe(gulp.dest('built'));
+    return gulp.src(['source.js'])
+
+        // pass your directives
+        // as an object
+        .pipe(jslint({
+            // these directives can
+            // be found in the official
+            // JSLint documentation.
+            node: true,
+            evil: true,
+            nomen: true,
+
+            // pass in your prefered
+            // reporter like so:
+            reporter: 'default',
+            // ^ there's no need to tell gulp-jslint
+            // to use the default reporter. If there is
+            // no reporter specified, gulp-jslint will use
+            // its own.
+
+            // specify whether or not
+            // to show 'PASS' messages
+            // for built-in reporter
+            errorsOnly: false
+        }))
+
+        // error handling:
+        // to handle on error, simply
+        // bind yourself to the error event
+        // of the stream, and use the only
+        // argument as the error object
+        // (error instanceof Error)
+        .on('error', function (error) {
+            console.error(String(error));
+        });
 });
 ```
 
@@ -61,4 +77,4 @@ $ npm test
 
 ## Support
 Please use the official issues section in GitHub to post issues.
-All forks and helpful comments are much appreciated. :D
+All forks and helpful comments are much appreciated.

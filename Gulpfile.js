@@ -41,6 +41,16 @@
                 // to show 'PASS' messages
                 // for built-in reporter
                 errorsOnly: false
-            }));
+            }))
+
+            // error handling:
+            // to handle on error, simply
+            // bind yourself to the error event
+            // of the stream, and use the only
+            // argument as the error object
+            // (error instanceof Error)
+            .on('error', function (error) {
+                console.error(String(error));
+            });
     });
 }());

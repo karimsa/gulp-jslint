@@ -17,8 +17,6 @@ var gulp = require('gulp');
 var jslint = require('gulp-jslint');
 
 // build the main source into the min file
-// and use the last working minified version
-// to lint the current.
 gulp.task('default', function () {
     return gulp.src(['source.js'])
 

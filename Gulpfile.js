@@ -18,8 +18,6 @@
     });
 
     // build the main source into the min file
-    // and use the last working minified version
-    // to lint the current.
     gulp.task('default', ['gulpfile'], function () {
         return gulp.src(['gulp.jslint.js'])
 

@@ -23,7 +23,7 @@
                         src.jslint = {};
 
                         if (err || !JSLINT) {
-                            myRet = fn(err || 'gulp-jslint: failed to load JSLINT.');
+                            myRet = fn(err || new Error('gulp-jslint: failed to load JSLINT.'));
                         } else {
                             // convert to string
                             js = src.contents.toString('utf8');
@@ -57,7 +57,7 @@
                                     }
                                 }
 
-                                fn('gulp-jslint: failed to lint file.');
+                                fn(new Error('gulp-jslint: failed to lint file.'));
                             } else {
                                 if (options.reporter === 'default') {
                                     if (options.errorsOnly !== true) {
@@ -97,6 +97,8 @@
                 }
             };
         };
+
+
 
     module.exports = function (options) {
         // fallback to object

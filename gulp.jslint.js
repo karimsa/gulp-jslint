@@ -15,7 +15,7 @@
         JSLINT = null,
         doLint = function (options) {
             return function (src, fn) {
-                var retVal, js, error, i,
+                var retVal, js,
                     lint = function (err) {
                         var myRet;
 
@@ -33,44 +33,65 @@
                             src.jslint.success = JSLINT(js, options);
                             src.jslint.errors = JSLINT.errors;
 
-                            // only support paths to reporter, or
-                            // pre-loaded reporters
-                            try {
-                                if (typeof options.reporter === 'string') {
-                                    options.reporter = require(options.reporter);
-                                } else if (typeof options.reporter !== 'function') {
-                                    options.reporter = 'default';
+                            if (options.reporter !== 'default') {
+                                // only support paths to reporter, or
+                                // pre-loaded reporters
+                                try {
+                                    if (typeof options.reporter === 'string') {
+                                        options.reporter = require(options.reporter);
+                                    } else if (typeof options.reporter !== 'function') {
+                                        options.reporter = 'default';
+                                    }
+                                } catch (err_a) {
+                                    fn(err_a);
                                 }
-                            } catch (err_a) {
-                                fn(err_a);
                             }
 
-                            // error handling
+                            // load the default reporter
                             if (options.reporter === 'default') {
-                                if (!src.jslint.success) {
-                                    error = '[FAIL] ' + src.path.replace(path.resolve('./') + '/', '');
+                                options.reporter = function (data) {
+                                    // attach status
+                                    var msg = '[' + (data.pass ? 'PASS'.green : 'FAIL') + '] ',
+                                        i;
 
-                                    for (i = 0; i < JSLINT.errors.length; i += 1) {
-                                        if (JSLINT.errors[i]) {
-                                            error += '\n       line ' + JSLINT.errors[i].line +
-                                                ', col ' + JSLINT.errors[i].character +
-                                                ': ' + JSLINT.errors[i].reason;
+                                    // shorten path name
+                                    data.file = data.file.replace(path.join(path.resolve('./'), '/'), '');
+
+                                    if (!data.pass) {
+                                        msg += data.file;
+
+                                        // add reasons to errors
+                                        for (i = 0; i < data.errors.length; i += 1) {
+                                            if (data.errors[i]) {
+                                                msg += '\n       line ' + data.errors[i].line +
+                                                    ', col ' + data.errors[i].character +
+                                                    ': ' + data.errors[i].reason;
+                                            }
                                         }
+
+                                        // redify
+                                        msg = msg.red;
+                                    } else {
+                                        msg += data.file.cyan;
                                     }
 
-                                    console.log('%s', error.red);
+                                    // print out
+                                    console.log(msg);
+                                };
+                            }
 
-                                    fn(new Error('gulp-jslint: failed to lint file.'));
-                                } else {
+                            // pass error handling onto reporter
+                            options.reporter({
+                                pass: src.jslint.success,
+                                file: src.path,
+                                errors: JSLINT.errors
+                            });
 
-                                    if (options.errorsOnly !== true) {
-                                        console.log('[%s] %s', 'PASS'.green, src.path.replace(path.resolve('./') + '/', '').cyan);
-                                    }
-
-                                    myRet = fn(null, src);
-                                }
+                            // decide where to go
+                            if (src.jslint.success) {
+                                myRet = fn(null, src);
                             } else {
-                                options.reporter({ pass: src.jslint.success, file: src.path });
+                                fn(new Error('gulp-jslint: failed to lint file.'));
                             }
                         }
 

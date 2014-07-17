@@ -60,6 +60,36 @@ When not specified, the default reporter will write a pass/fail message to the c
 
 For a list of directives, see [the official JSLint docs](http://www.jslint.com/lint.html).
 
+### Custom Reporters
+A custom reporter is simply a function that receives a JSON object with 2 properties:
+- `pass`: a boolean (true/false) of whether the lint was successful.
+- `file`: an absolute path to the file.
+
+Sample Gruntfile with a custom reporter:
+```javascript
+var gulp = require('gulp');
+var jslint = require('gulp-jslint');
+
+gulp.task('default', function () {
+    return gulp.src(['my_source.js'])
+            .pipe(jslint({
+                reporter: function (evt) {
+                    var msg = ' ' + evt.file;
+                    
+                    if (evt.pass) {
+                        msg = '[PASS]' + msg;
+                    } else {
+                        msg = '[FAIL]' + msg;
+                    }
+                    
+                    console.log(msg);
+                }
+            }));
+});
+```
+
+It's probably a good idea to use something like `path.basename()` on the `file` property to avoid lots of garbage in the command-line (i.e. path.basename('/home/user/documents/projects/my-project/index.js') === 'index.js').
+
 ## Custom Install
 To build from source, simply do the following:
 

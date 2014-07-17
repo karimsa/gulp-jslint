@@ -33,49 +33,44 @@
                             src.jslint.success = JSLINT(js, options);
                             src.jslint.errors = JSLINT.errors;
 
-                            // reporter handling
-                            if (!src.jslint.success) {
-                                if (options.reporter === 'default') {
-                                    error = '[FAIL] ' + src.path.replace(path.resolve(__dirname) + '/', '');
+                            // only support paths to reporter, or
+                            // pre-loaded reporters
+                            try {
+                                if (typeof options.reporter === 'string') {
+                                    options.reporter = require(options.reporter);
+                                } else if (typeof options.reporter !== 'function') {
+                                    options.reporter = 'default';
+                                }
+                            } catch (err_a) {
+                                fn(err_a);
+                            }
+
+                            // error handling
+                            if (options.reporter === 'default') {
+                                if (!src.jslint.success) {
+                                    error = '[FAIL] ' + src.path.replace(path.resolve('./') + '/', '');
 
                                     for (i = 0; i < JSLINT.errors.length; i += 1) {
                                         if (JSLINT.errors[i]) {
-                                            error += '\n       line ' + JSLINT.errors[i].line + ', col ' + JSLINT.errors[i].character + ': ' + JSLINT.errors[i].reason;
+                                            error += '\n       line ' + JSLINT.errors[i].line +
+                                                ', col ' + JSLINT.errors[i].character +
+                                                ': ' + JSLINT.errors[i].reason;
                                         }
                                     }
 
                                     console.log('%s', error.red);
+
+                                    fn(new Error('gulp-jslint: failed to lint file.'));
                                 } else {
-                                    try {
-                                        // grab the reporter
-                                        options.reporter = require(options.reporter);
 
-                                        // do the piping
-                                        evtStr.pipe(options.reporter);
-                                    } catch (err_a) {
-                                        console.log(('error: unknown reporter: ' + options.reporter).red);
-                                    }
-                                }
-
-                                fn(new Error('gulp-jslint: failed to lint file.'));
-                            } else {
-                                if (options.reporter === 'default') {
                                     if (options.errorsOnly !== true) {
-                                        console.log('[%s] %s', 'PASS'.green, src.path.replace(path.resolve(__dirname) + '/', '').cyan);
+                                        console.log('[%s] %s', 'PASS'.green, src.path.replace(path.resolve('./') + '/', '').cyan);
                                     }
-                                } else {
-                                    try {
-                                        // grab the reporter
-                                        options.reporter = require(options.reporter);
 
-                                        // do the piping
-                                        evtStr.pipe(options.reporter);
-                                    } catch (err_b) {
-                                        console.log(('error: unknown reporter: ' + options.reporter).red);
-                                    }
+                                    myRet = fn(null, src);
                                 }
-
-                                myRet = fn(null, src);
+                            } else {
+                                options.reporter({ pass: src.jslint.success, file: src.path });
                             }
                         }
 

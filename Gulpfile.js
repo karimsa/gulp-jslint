@@ -11,15 +11,9 @@
     var gulp = require('gulp'),
         jslint = require('./gulp.jslint.js');
 
-    // test our Gulpfile in a separate task,
-    // to maintain gulp's streaming output.
-    gulp.task('gulpfile', function () {
-        return gulp.src(['Gulpfile.js']).pipe(jslint({ node: true }));
-    });
-
-    // build the main source into the min file
-    gulp.task('default', ['gulpfile'], function () {
-        return gulp.src(['gulp.jslint.js'])
+    // lint all code
+    gulp.task('default', function () {
+        return gulp.src(['Gulpfile.js', 'gulp.jslint.js'])
 
             // pass your directives
             // as an object

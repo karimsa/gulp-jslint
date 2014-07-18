@@ -49,33 +49,31 @@
 
                             // load the default reporter
                             if (options.reporter === 'default') {
-                                options.reporter = function (data) {
-                                    // attach status
-                                    var msg = '[' + (data.pass ? 'PASS'.green : 'FAIL') + '] ',
-                                        i;
+                                options.reporter = function (evt) {
+                                    var msg = '       ', i;
 
-                                    // shorten path name
-                                    data.file = data.file.replace(path.join(path.resolve('./'), '/'), '');
+                                    // shorten path
+                                    evt.file = evt.file.replace(path.join(path.resolve('./'), '/'), '');
 
-                                    if (!data.pass) {
-                                        msg += data.file;
+                                    // colorify
+                                    evt.file = evt.pass ? evt.file.green : evt.file.red;
 
-                                        // add reasons to errors
-                                        for (i = 0; i < data.errors.length; i += 1) {
-                                            if (data.errors[i]) {
-                                                msg += '\n       line ' + data.errors[i].line +
-                                                    ', col ' + data.errors[i].character +
-                                                    ': ' + data.errors[i].reason;
+                                    // print file name
+                                    msg += evt.file;
+
+                                    // add reasons to errors
+                                    if (!evt.pass) {
+                                        for (i = 0; i < evt.errors.length; i += 1) {
+                                            if (evt.errors[i]) {
+                                                msg += ('\n           ' +
+                                                    evt.errors[i].line + ':' +
+                                                    evt.errors[i].character + ': ' +
+                                                    evt.errors[i].reason).red;
                                             }
                                         }
-
-                                        // redify
-                                        msg = msg.red;
-                                    } else {
-                                        msg += data.file.cyan;
                                     }
 
-                                    // print out
+                                    // write to screen
                                     console.log(msg);
                                 };
                             }

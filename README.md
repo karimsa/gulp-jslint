@@ -1,6 +1,8 @@
 # gulp-jslint [![Build Status](http://img.shields.io/travis/karimsa/gulp-jslint.svg?style=flat)](https://travis-ci.org/karimsa/gulp-jslint) [![View on NPM](http://img.shields.io/npm/dm/gulp-jslint.svg?style=flat)](http://npmjs.org/package/gulp-jslint)
 It's JSLint for Gulp.js.
 
+[![NPM](https://nodei.co/npm/kinvey-local.png)](https://nodei.co/npm/kinvey-local/)
+
 ## Usage
 
 To install with npm, simply do:

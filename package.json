@@ -10,10 +10,13 @@
   },
   "devDependencies": {
     "colors": "^0.6.2",
-    "gulp": "^3.6.2"
+    "gulp": "^3.6.2",
+    "colortape": "0.0.4",
+    "tape": "^2.13.3",
+    "vinyl": "^0.3.0"
   },
   "scripts": {
-    "test": "gulp"
+    "test": "node test/test-gulp.jslint.js | node node_modules/colortape/bin/colortape"
   },
   "repository": {
     "type": "git",

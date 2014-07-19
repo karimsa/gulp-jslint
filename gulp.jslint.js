@@ -1,6 +1,6 @@
 /**
  * gulp.jslint.js
- * Copyright (C) 2014 KarimSa Networks.
+ * Copyright (C) 2014 Karim Alibhai.
  **/
 
 (function () {

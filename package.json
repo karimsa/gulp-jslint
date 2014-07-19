@@ -16,6 +16,7 @@
     "vinyl": "^0.3.0"
   },
   "scripts": {
+    "pretest": "gulp",
     "test": "node test/test-gulp.jslint.js | node node_modules/colortape/bin/colortape"
   },
   "repository": {

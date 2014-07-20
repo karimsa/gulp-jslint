@@ -11,6 +11,3 @@ deploy:
 addons:
   code_climate:
     repo_token: a521875d805dc21de57816562ed6454b9c30c4e991a591b66fccdb29d8ca1c95
-after_script:
-    - cat coverage/lcov.info | codeclimate
-    - rm -rf coverage

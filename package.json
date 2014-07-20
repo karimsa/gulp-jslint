@@ -15,11 +15,15 @@
     "tape": "^2.13.3",
     "vinyl": "^0.3.0",
     "istanbul": "^0.3.0",
-    "codeclimate-test-reporter": "0.0.3"
+    "codeclimate-test-reporter": "0.0.3",
+    "rimraf": "^2.2.8"
   },
   "scripts": {
     "pretest": "gulp",
-    "test": "istanbul cover test/test-gulp.jslint.js --report lcovonly"
+    "test": "npm run coverage && npm run codeclimate && npm run rm",
+    "coverage": "istanbul cover test/test-gulp.jslint.js --report lcovonly",
+    "codeclimate": "cat coverage/lcov.info | codeclimate",
+    "rm": "rimraf coverage"
   },
   "repository": {
     "type": "git",

@@ -7,6 +7,6 @@
 
 (function () {
     module.exports = function (evt) {
-        console.log('report stuff');
+        global.GULP_JSLINT_REPORTER = evt;
     };
 }());

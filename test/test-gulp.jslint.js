@@ -79,17 +79,17 @@
 
     // test core stuff
     test('custom reporter via string', function (t) {
-        t.plan(1);
+        t.plan(3);
 
-        var log = console.log,
-            str = jslint({
-                reporter: path.resolve(__dirname, './test-reporter.js')
-            });
+        var str = jslint({
+            reporter: path.resolve(__dirname, './test-reporter.js')
+        });
 
-        console.log = function (a) {
-            t.equal(a, 'report stuff', 'reporter reports stuff');
-            console.log = log;
-        };
+        str.on('data', function () {
+            t.ok(global.GULP_JSLINT_REPORTER, 'reporter fired');
+            t.ok(global.GULP_JSLINT_REPORTER.hasOwnProperty('pass'), 'lint status is in event data');
+            t.ok(global.GULP_JSLINT_REPORTER.hasOwnProperty('file'), 'source file is in event data');
+        });
 
         fs.readFile(path.resolve(__dirname, './test-good.js'), function (err, data) {
             if (err) {

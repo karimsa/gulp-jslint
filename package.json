@@ -1,6 +1,6 @@
 {
   "name": "gulp-jslint",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "The classic and strict javascript lint-tool for gulp.js",
   "main": "gulp.jslint.js",
   "dependencies": {
@@ -13,11 +13,13 @@
     "gulp": "^3.6.2",
     "colortape": "0.0.4",
     "tape": "^2.13.3",
-    "vinyl": "^0.3.0"
+    "vinyl": "^0.3.0",
+    "istanbul": "^0.3.0",
+    "codeclimate-test-reporter": "0.0.3"
   },
   "scripts": {
     "pretest": "gulp",
-    "test": "node test/test-gulp.jslint.js | node node_modules/colortape/bin/colortape"
+    "test": "istanbul cover test/test-gulp.jslint.js --report lcovonly"
   },
   "repository": {
     "type": "git",

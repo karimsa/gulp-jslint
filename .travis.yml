@@ -8,3 +8,9 @@ deploy:
     secure: YurTa+pMAALEHQ+H0YdPvzmHt3dZnsp6PRNm6tV9wqiC9bGw/WVJRMY/xxvMZ3tNFAxGZ1uPxU3gQb2YPnFRfl4R9imamotmyhYXJoozOnR8Bz76RcbZTpwGsWde9G9nSNY+a+vRv7YW5DVK7wEkdzOnGSRdzsnIpJ/hebYm8TA=
   on:
     repo: karimsa/gulp-jslint
+addons:
+  code_climate:
+    repo_token: a521875d805dc21de57816562ed6454b9c30c4e991a591b66fccdb29d8ca1c95
+after_script:
+    - cat coverage/lcov.info | codeclimate
+    - rm -rf coverage

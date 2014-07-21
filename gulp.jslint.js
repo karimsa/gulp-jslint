@@ -95,13 +95,17 @@
 
                 if (src.isStream()) {
                     retVal = fn(new Error('gulp-jslint: bad file input.'));
+                } else if (src.isNull()) {
+                    retVal = fn(null, src);
                 } else {
-                    if (!src.isNull() && JSLINT === null) {
+                    if (JSLINT === null) {
                         JSLINT = jslint.load('latest');
                     }
 
-                    return retVal || lint();
+                    retVal = lint();
                 }
+
+                return retVal;
             };
         };
 

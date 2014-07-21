@@ -76,7 +76,7 @@
         nomen: true
     });
 
-    test('do not support streams', function (t) {
+    test('stream support', function (t) {
         t.plan(1);
 
         var str = jslint();
@@ -87,6 +87,29 @@
 
         str.write({
             isStream: function () {
+                return true;
+            }
+        });
+    });
+
+    test('null input', function (t) {
+        t.plan(1);
+
+        var str = jslint();
+
+        str.on('data', function () {
+            t.ok(true, 'ignored null');
+        });
+
+        str.on('error', function () {
+            t.ok(false, 'errored out on null');
+        });
+
+        str.write({
+            isStream: function () {
+                return false;
+            },
+            isNull: function () {
                 return true;
             }
         });

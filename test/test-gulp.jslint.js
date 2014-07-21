@@ -70,10 +70,62 @@
             };
         };
 
-    // setup tests per file
+    // basic linting tests
     lint('with good code', 'test-good.js');
     lint('with bad code', 'test-nomen.js').fail();
     lint('with directives', 'test-nomen.js', {
         nomen: true
+    });
+
+    // test core stuff
+    test('custom reporter via string', function (t) {
+        t.plan(3);
+
+        var str = jslint({
+            reporter: path.resolve(__dirname, './test-reporter.js')
+        });
+
+        str.on('data', function () {
+            t.ok(global.GULP_JSLINT_REPORTER, 'reporter fired');
+            t.ok(global.GULP_JSLINT_REPORTER.hasOwnProperty('pass'), 'lint status is in event data');
+            t.ok(global.GULP_JSLINT_REPORTER.hasOwnProperty('file'), 'source file is in event data');
+        });
+
+        fs.readFile(path.resolve(__dirname, './test-good.js'), function (err, data) {
+            if (err) {
+                t.fail(err);
+            } else {
+                str.write(new Vinyl({
+                    base: __dirname,
+                    cwd: path.resolve(__dirname, '../'),
+                    path: path.join(__dirname, 'test-good.js'),
+                    contents: data
+                }));
+            }
+        });
+    });
+    test('custom reporter via function', function (t) {
+        t.plan(3);
+
+        var str = jslint({
+            reporter: function (evt) {
+                t.ok(true, 'reporter fired');
+                t.ok(evt.hasOwnProperty('pass'), 'lint status is in event data');
+                t.ok(evt.hasOwnProperty('file'), 'source file is in event data');
+            }
+        });
+
+        fs.readFile(path.resolve(__dirname, './test-good.js'), function (err, data) {
+            if (err) {
+                t.fail(err);
+            } else {
+                str.write(new Vinyl({
+                    base: __dirname,
+                    cwd: path.resolve(__dirname, '../'),
+                    path: path.join(__dirname, 'test-good.js'),
+                    contents: data
+                }));
+            }
+        });
     });
 }());

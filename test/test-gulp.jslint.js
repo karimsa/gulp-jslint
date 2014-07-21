@@ -153,22 +153,18 @@
             }
         });
 
-        str.on('data', function () {
-            t.ok(true, 'defaulted to default reporter');
-        });
-
         str.on('error', function (err) {
-            t.ok(false, err);
+            t.equal(String(err), 'Error: gulp-jslint: failed to lint file.', 'defaults to default reporter');
         });
 
-        fs.readFile(path.resolve(__dirname, './test-good.js'), function (err, data) {
+        fs.readFile(path.resolve(__dirname, './test-nomen.js'), function (err, data) {
             if (err) {
                 t.fail(err);
             } else {
                 str.write(new Vinyl({
                     base: __dirname,
                     cwd: path.resolve(__dirname, '../'),
-                    path: path.join(__dirname, 'test-good.js'),
+                    path: path.join(__dirname, 'test-nomen.js'),
                     contents: data
                 }));
             }

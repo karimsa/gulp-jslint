@@ -70,14 +70,28 @@
             };
         };
 
-    // basic linting tests
     lint('with good code', 'test-good.js');
     lint('with bad code', 'test-nomen.js').fail();
     lint('with directives', 'test-nomen.js', {
         nomen: true
     });
 
-    // test core stuff
+    test('do not support streams', function (t) {
+        t.plan(1);
+
+        var str = jslint();
+
+        str.on('error', function () {
+            t.ok(true, 'errored out on stream');
+        });
+
+        str.write({
+            isStream: function () {
+                return true;
+            }
+        });
+    });
+
     test('custom reporter via string', function (t) {
         t.plan(3);
 
@@ -104,6 +118,7 @@
             }
         });
     });
+
     test('custom reporter via function', function (t) {
         t.plan(3);
 
@@ -113,6 +128,62 @@
                 t.ok(evt.hasOwnProperty('pass'), 'lint status is in event data');
                 t.ok(evt.hasOwnProperty('file'), 'source file is in event data');
             }
+        });
+
+        fs.readFile(path.resolve(__dirname, './test-good.js'), function (err, data) {
+            if (err) {
+                t.fail(err);
+            } else {
+                str.write(new Vinyl({
+                    base: __dirname,
+                    cwd: path.resolve(__dirname, '../'),
+                    path: path.join(__dirname, 'test-good.js'),
+                    contents: data
+                }));
+            }
+        });
+    });
+
+    test('custom bad reporter (object)', function (t) {
+        t.plan(1);
+
+        var str = jslint({
+            reporter: {
+                what: 'this object should be ignored'
+            }
+        });
+
+        str.on('data', function () {
+            t.ok(true, 'defaulted to default reporter');
+        });
+
+        str.on('error', function (err) {
+            t.ok(false, err);
+        });
+
+        fs.readFile(path.resolve(__dirname, './test-good.js'), function (err, data) {
+            if (err) {
+                t.fail(err);
+            } else {
+                str.write(new Vinyl({
+                    base: __dirname,
+                    cwd: path.resolve(__dirname, '../'),
+                    path: path.join(__dirname, 'test-good.js'),
+                    contents: data
+                }));
+            }
+        });
+    });
+
+    test('custom bad reporter (missing module)', function (t) {
+        t.plan(1);
+
+        var str = jslint({
+            reporter: 'some-random-ass-reporter'
+        });
+
+        str.on('error', function () {
+            t.ok(true, 'errored out');
         });
 
         fs.readFile(path.resolve(__dirname, './test-good.js'), function (err, data) {

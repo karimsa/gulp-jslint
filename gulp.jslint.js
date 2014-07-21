@@ -40,7 +40,7 @@
                                     options.reporter = 'default';
                                 }
                             } catch (err_a) {
-                                fn(err_a);
+                                return fn(err_a);
                             }
                         }
 
@@ -87,7 +87,7 @@
                         if (src.jslint.success) {
                             myRet = fn(null, src);
                         } else {
-                            fn(new Error('gulp-jslint: failed to lint file.'));
+                            myRet = fn(new Error('gulp-jslint: failed to lint file.'));
                         }
 
                         return myRet;

@@ -10,6 +10,7 @@
     require('colors');
 
     var path = require('path'),
+        gutil = require('gulp-util'),
         evtStr = require('event-stream'),
         jslint = require('jslint'),
         JSLINT = null,
@@ -72,7 +73,9 @@
                                 }
 
                                 // write to screen
-                                console.log(msg);
+                                if (!(evt.pass && options.errorsOnly)) {
+                                    gutil.log(msg);
+                                }
                             };
                         }
 
@@ -87,14 +90,14 @@
                         if (src.jslint.success) {
                             myRet = fn(null, src);
                         } else {
-                            myRet = fn(new Error('gulp-jslint: failed to lint file.'));
+                            myRet = fn(new gutil.PluginError('gulp-jslint', 'failed to lint ' + src.path));
                         }
 
                         return myRet;
                     };
 
                 if (src.isStream()) {
-                    retVal = fn(new Error('gulp-jslint: bad file input.'));
+                    retVal = fn(new gutil.PluginError('gulp-jslint', 'bad input file ' + src.path));
                 } else if (src.isNull()) {
                     retVal = fn(null, src);
                 } else {

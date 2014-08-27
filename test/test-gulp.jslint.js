@@ -12,6 +12,7 @@
 
     var fs = require('fs'),
         path = require('path'),
+        strip = require('stripcolorcodes'),
         test = require('tape'),
         Vinyl = require('vinyl'),
         jslint = require('../gulp.jslint.js'),
@@ -168,7 +169,7 @@
     });
 
     test('custom bad reporter (object)', function (t) {
-        t.plan(1);
+        t.plan(4);
 
         var str = jslint({
             reporter: {
@@ -177,7 +178,11 @@
         });
 
         str.on('error', function (err) {
-            t.equal(String(err), 'Error: gulp-jslint: failed to lint file.', 'defaults to default reporter');
+            var message = strip(String(err));
+            t.ok(message.indexOf('Error') > -1);
+            t.ok(message.indexOf('gulp-jslint') > -1);
+            t.ok(message.indexOf('failed to lint') > -1);
+            t.ok(message.indexOf('test/test-nomen.js') > -1);
         });
 
         fs.readFile(path.resolve(__dirname, './test-nomen.js'), function (err, data) {

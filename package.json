@@ -6,17 +6,19 @@
   "dependencies": {
     "colors": "^0.6.2",
     "event-stream": "^3.1.5",
+    "gulp-util": "^3.0.0",
     "jslint": "^0.3.4"
   },
   "devDependencies": {
-    "colors": "^0.6.2",
-    "gulp": "^3.6.2",
-    "colortape": "0.0.4",
-    "tape": "^2.13.3",
-    "vinyl": "^0.3.0",
-    "istanbul": "^0.3.0",
     "codeclimate-test-reporter": "0.0.3",
-    "rimraf": "^2.2.8"
+    "colors": "^0.6.2",
+    "colortape": "0.0.4",
+    "gulp": "^3.6.2",
+    "istanbul": "^0.3.0",
+    "rimraf": "^2.2.8",
+    "stripcolorcodes": "^0.1.0",
+    "tape": "^2.13.3",
+    "vinyl": "^0.3.0"
   },
   "scripts": {
     "pretest": "gulp",

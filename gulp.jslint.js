@@ -18,7 +18,7 @@
             return function (src, fn) {
                 var retVal, js,
                     lint = function () {
-                        var myRet, str;
+                        var myRet;
 
                         // prepare for linting exports
                         src.jslint = {};

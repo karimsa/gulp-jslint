@@ -18,13 +18,18 @@
             return function (src, fn) {
                 var retVal, js,
                     lint = function () {
-                        var myRet;
+                        var myRet, str;
 
                         // prepare for linting exports
                         src.jslint = {};
 
                         // convert to string
                         js = src.contents.toString('utf8');
+
+                        // check for shebang
+                        if (js.substr(0, js.indexOf('\n')).match(/^#! ?/)) {
+                            js = js.replace(js.split('\n', 1) + '\n', '');
+                        }
 
                         // lint the file
                         src.jslint.edition = JSLINT.edition;

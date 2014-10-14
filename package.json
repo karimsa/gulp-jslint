@@ -1,24 +1,24 @@
 {
   "name": "gulp-jslint",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "The classic and strict javascript lint-tool for gulp.js",
   "main": "gulp.jslint.js",
   "dependencies": {
-    "colors": "^0.6.2",
-    "event-stream": "^3.1.5",
-    "gulp-util": "^3.0.0",
-    "jslint": "^0.3.4"
+    "colors": "^1.0.3",
+    "event-stream": "^3.1.7",
+    "gulp-util": "^3.0.1",
+    "jslint": "^0.6.4"
   },
   "devDependencies": {
-    "codeclimate-test-reporter": "0.0.3",
-    "colors": "^0.6.2",
+    "codeclimate-test-reporter": "0.0.4",
+    "colors": "^1.0.3",
     "colortape": "0.0.4",
-    "gulp": "^3.6.2",
-    "istanbul": "^0.3.0",
+    "gulp": "^3.8.8",
+    "istanbul": "^0.3.2",
     "rimraf": "^2.2.8",
     "stripcolorcodes": "^0.1.0",
-    "tape": "^2.13.3",
-    "vinyl": "^0.3.0"
+    "tape": "^3.0.0",
+    "vinyl": "^0.4.3"
   },
   "scripts": {
     "pretest": "gulp",

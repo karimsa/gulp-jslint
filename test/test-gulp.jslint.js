@@ -179,10 +179,10 @@
 
         str.on('error', function (err) {
             var message = strip(String(err));
-            t.ok(message.indexOf('Error') > -1);
-            t.ok(message.indexOf('gulp-jslint') > -1);
-            t.ok(message.indexOf('failed to lint') > -1);
-            t.ok(message.indexOf('test/test-nomen.js') > -1);
+            t.ok(message.indexOf('Error') > -1, 'valid error');
+            t.ok(message.indexOf('gulp-jslint') > -1, 'valid source');
+            t.ok(message.indexOf('failed to lint') > -1, 'valid description');
+            t.ok(message.indexOf(path.join('test', 'test-nomen.js')) > -1, 'valid filename');
         });
 
         fs.readFile(path.resolve(__dirname, './test-nomen.js'), function (err, data) {

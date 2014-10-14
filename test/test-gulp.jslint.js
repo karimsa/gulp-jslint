@@ -72,10 +72,12 @@
         };
 
     lint('with good code', 'test-good.js');
-    lint('with good code (with shebang)', 'test-shebang.js');
     lint('with bad code', 'test-nomen.js').fail();
     lint('with directives', 'test-nomen.js', {
         nomen: true
+    });
+    lint('with good code (with shebang)', 'test-shebang.js', {
+        node: true
     });
 
     test('stream support', function (t) {

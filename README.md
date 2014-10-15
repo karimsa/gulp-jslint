@@ -1,7 +1,7 @@
 # gulp-jslint [![Build Status](http://img.shields.io/travis/karimsa/gulp-jslint.svg?style=flat)](https://travis-ci.org/karimsa/gulp-jslint) [![View on NPM](http://img.shields.io/npm/dm/gulp-jslint.svg?style=flat)](http://npmjs.org/package/gulp-jslint) [![code climate](http://img.shields.io/codeclimate/github/karimsa/gulp-jslint.svg?style=flat)](https://codeclimate.com/github/karimsa/gulp-jslint) [![code coverage](http://img.shields.io/codeclimate/coverage/github/karimsa/gulp-jslint.svg?style=flat)](https://codeclimate.com/github/karimsa/gulp-jslint)
 It's JSLint for Gulp.js.
 
-[![NPM](https://nodei.co/npm/gulp-jslint.png)](https://nodei.co/npm/gulp-jslint/)
+[![NPM](https://nodei.co/npm/gulp-jslint.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/gulp-jslint/)
 
 ## Usage
 

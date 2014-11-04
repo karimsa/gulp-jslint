@@ -127,6 +127,10 @@
         // force boolean
         options.errorsOnly = options.hasOwnProperty('errorsOnly') && options.errorsOnly === true;
 
+        // use 'global' for consistency
+        // prefer 'predef' because of JSLint
+        options.predef = options.predef || options.global || {};
+
         // begin linting
         return evtStr.map(doLint(options));
     };

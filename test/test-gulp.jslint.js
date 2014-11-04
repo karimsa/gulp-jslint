@@ -79,6 +79,13 @@
     lint('with good code (with shebang)', 'test-shebang.js', {
         node: true
     });
+    lint('with good code (missing globals)', 'test-jquery.js').fail();
+    lint('with good code (given globals)', 'test-jquery.js', {
+        global: ['$']
+    });
+    lint('with good code (given predef)', 'test-jquery.js', {
+        predef: ['$']
+    });
 
     test('stream support', function (t) {
         t.plan(1);

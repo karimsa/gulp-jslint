@@ -12,7 +12,7 @@ $ npm install gulp-jslint
 .. installs gulp-jslint ..
 ```
 
-Sample Gulpfile.js:
+Sample gulpfile.js:
 
 ```javascript
 var gulp = require('gulp');
@@ -31,6 +31,16 @@ gulp.task('default', function () {
             node: true,
             evil: true,
             nomen: true,
+
+            // you can also set global
+            // declarations for all source
+            // files like so:
+            global: [],
+            predef: [],
+            // both ways will achieve the
+            // same result; predef will be
+            // given priority because it is
+            // promoted by JSLint
 
             // pass in your prefered
             // reporter like so:

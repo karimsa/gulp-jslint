@@ -1,5 +1,5 @@
 /**
- * Gulpfile.js
+ * gulpfile.js
  * For build instructions, please see README.md.
  *
  * Copyright (C) 2014 KarimSa Networks.
@@ -13,7 +13,7 @@
 
     // lint all code
     gulp.task('default', function () {
-        return gulp.src(['Gulpfile.js', 'gulp.jslint.js'])
+        return gulp.src(['gulpfile.js', 'gulp.jslint.js'])
 
             // pass your directives
             // as an object
@@ -23,6 +23,17 @@
                 // JSLint documentation.
                 node: true,
                 nomen: true,
+
+                // you can also set global
+                // declarations for all source
+                // files like so:
+                global: [],
+                predef: [],
+
+                // both ways will achieve the
+                // same result; predef will be
+                // given priority because it is
+                // promoted by JSLint
 
                 // pass in your prefered
                 // reporter like so:

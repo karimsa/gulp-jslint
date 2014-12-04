@@ -23,7 +23,7 @@
                 // synchronous node.js code
 
                 /*jslint evil:true*/
-                tmp = eval("JSON.parse(require('fs').readFileSync(path.resolve(__dirname, '.jslintrc'), 'utf8'))");
+                tmp = eval("JSON.parse(require('fs').readFileSync(path.resolve('.', '.jslintrc'), 'utf8'))");
                 /*jslint evil:false*/
             } finally {
                 for (i in options) {

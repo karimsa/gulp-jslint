@@ -13,6 +13,28 @@
         gutil = require('gulp-util'),
         evtStr = require('event-stream'),
         jslint = require('jslint'),
+        applyRC = function (options) {
+            var tmp = {},
+                i;
+
+            try {
+                // evil code helps get
+                // past jslint's hatred of
+                // synchronous node.js code
+
+                /*jslint evil:true*/
+                tmp = eval("JSON.parse(require('fs').readFileSync(path.resolve(__dirname, '.jslintrc'), 'utf8'))");
+                /*jslint evil:false*/
+            } finally {
+                for (i in options) {
+                    if (options.hasOwnProperty(i)) {
+                        tmp[i] = options[i];
+                    }
+                }
+
+                return tmp;
+            }
+        },
         JSLINT = null,
         doLint = function (options) {
             return function (src, fn) {
@@ -118,8 +140,12 @@
         };
 
     module.exports = function (options) {
-        // fallback to object
+        // fallback to empty object
         options = options || {};
+
+        // extend .jslintrc; give options
+        // the priority for directives
+        options = applyRC(options);
 
         // set default reporter
         options.reporter = options.reporter || 'default';

@@ -50,6 +50,11 @@ gulp.task('default', function () {
             // no reporter specified, gulp-jslint will use
             // its own.
 
+            // specifiy custom jslint edition
+            // by default, the latest edition will
+            // be used
+            edition: '2014-07-08',
+
             // specify whether or not
             // to show 'PASS' messages
             // for built-in reporter

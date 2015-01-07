@@ -129,7 +129,7 @@
                     retVal = fn(null, src);
                 } else {
                     if (JSLINT === null) {
-                        JSLINT = jslint.load('latest');
+                        JSLINT = jslint.load(options.edition);
                     }
 
                     retVal = lint();
@@ -156,6 +156,9 @@
         // use 'global' for consistency
         // prefer 'predef' because of JSLint
         options.predef = options.predef || options.global || {};
+
+        // allow freezing of jslint edition
+        options.edition = options.edition || 'latest';
 
         // begin linting
         return evtStr.map(doLint(options));

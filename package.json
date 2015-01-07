@@ -4,21 +4,20 @@
   "description": "The classic and strict javascript lint-tool for gulp.js",
   "main": "gulp.jslint.js",
   "dependencies": {
-    "colors": "^1.0.3",
-    "event-stream": "^3.1.7",
-    "gulp-util": "^3.0.1",
-    "jslint": "^0.6.4"
+    "colors": "1.0.3",
+    "event-stream": "~3.2.1",
+    "gulp-util": "~3.0.2",
+    "jslint": "0.7.1"
   },
   "devDependencies": {
     "codeclimate-test-reporter": "0.0.4",
-    "colors": "^1.0.3",
     "colortape": "0.0.4",
-    "gulp": "^3.8.8",
-    "istanbul": "^0.3.2",
-    "rimraf": "^2.2.8",
-    "stripcolorcodes": "^0.1.0",
-    "tape": "^3.0.0",
-    "vinyl": "^0.4.3"
+    "gulp": "^3.8.10",
+    "istanbul": "^0.3.5",
+    "rimraf": "2.2.8",
+    "stripcolorcodes": "0.1.0",
+    "tape": "^3.0.3",
+    "vinyl": "^0.4.6"
   },
   "scripts": {
     "pretest": "gulp",

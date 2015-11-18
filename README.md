@@ -75,7 +75,7 @@ gulp.task('default', function () {
 
 When not specified, the default reporter will write a pass/fail message to the console with every file.  If you only wish to see errors, set the `errorsOnly` property to `true`.  *Note:* The `errorsOnly` property only affects the default reporter.
 
-For a list of directives, see [the official JSLint docs](http://www.jslint.com/lint.html).
+For a list of directives, see [the official JSLint docs](http://www.jslint.com/help.html).
 
 ### Custom Reporters
 A custom reporter is simply a function that receives a JSON object with 2 properties:
@@ -92,13 +92,13 @@ gulp.task('default', function () {
             .pipe(jslint({
                 reporter: function (evt) {
                     var msg = ' ' + evt.file;
-                    
+
                     if (evt.pass) {
                         msg = '[PASS]' + msg;
                     } else {
                         msg = '[FAIL]' + msg;
                     }
-                    
+
                     console.log(msg);
                 }
             }));

@@ -124,15 +124,16 @@
     });
 
     test('custom reporter via string', function (t) {
-        t.plan(3);
+        t.plan(4);
 
         var str = jslint();
         str.pipe(jslint.reporter(require('./test-reporter')));
 
         str.on('data', function () {
             t.ok(!!global.GULP_JSLINT_REPORTER, 'reporter fired');
-            t.ok(global.GULP_JSLINT_REPORTER.hasOwnProperty('pass'), 'lint status is in event data');
-            t.ok(global.GULP_JSLINT_REPORTER.hasOwnProperty('file'), 'source file is in event data');
+            t.ok(global.GULP_JSLINT_REPORTER.hasOwnProperty('filename'), 'source file is in event data');
+            t.ok(global.GULP_JSLINT_REPORTER.hasOwnProperty('success'), 'lint status is in event data');
+            t.ok(global.GULP_JSLINT_REPORTER.hasOwnProperty('errors'), 'errors list is in event data');
         });
 
         fs.readFile(path.resolve(__dirname, './test-good.js'), function (err, data) {
@@ -150,15 +151,15 @@
     });
 
     test('custom reporter via function', function (t) {
-        t.plan(3);
+        t.plan(4);
 
-        var str = jslint({
-            reporter: function (evt) {
-                t.ok(true, 'reporter fired');
-                t.ok(evt.hasOwnProperty('pass'), 'lint status is in event data');
-                t.ok(evt.hasOwnProperty('file'), 'source file is in event data');
-            }
-        });
+        var str = jslint();
+        str.pipe(jslint.reporter(function (evt) {
+            t.ok(!!evt, 'reporter fired');
+            t.ok(evt.hasOwnProperty('filename'), 'source file is in event data');
+            t.ok(evt.hasOwnProperty('success'), 'lint status is in event data');
+            t.ok(evt.hasOwnProperty('errors'), 'errors list is in event data');
+        }));
 
         fs.readFile(path.resolve(__dirname, './test-good.js'), function (err, data) {
             if (err) {
@@ -175,56 +176,20 @@
     });
 
     test('custom bad reporter (object)', function (t) {
-        t.plan(4);
-
-        var str = jslint();
-        str.pipe(jslint.reporter({
-            what: 'this object should be ignored'
-        }));
-
-        str.on('error', function (err) {
-            var message = strip(String(err));
-            t.ok(message.indexOf('Error') > -1, 'valid error');
-            t.ok(message.indexOf('gulp-jslint') > -1, 'valid source');
-            t.ok(message.indexOf('failed to lint') > -1, 'valid description');
-            t.ok(message.indexOf(path.join('test', 'test-nomen.js')) > -1, 'valid filename');
-        });
-
-        fs.readFile(path.resolve(__dirname, './test-nomen.js'), function (err, data) {
-            if (err) {
-                t.fail(err);
-            } else {
-                str.write(new Vinyl({
-                    base: __dirname,
-                    cwd: path.resolve(__dirname, '../'),
-                    path: path.join(__dirname, 'test-nomen.js'),
-                    contents: data
-                }));
-            }
-        });
+        t.plan(1);
+        t.throws(function () {
+            var str = jslint();
+            str.pipe(jslint.reporter({
+                what: 'this object should be ignored'
+            }));
+        }, 'path must be a string');
     });
 
     test('custom bad reporter (missing module)', function (t) {
         t.plan(1);
-
-        var str = jslint();
-        str.pipe(jslint.reporter('some-random-ass-reporter'));
-
-        str.on('error', function () {
-            t.ok(true, 'errored out');
-        });
-
-        fs.readFile(path.resolve(__dirname, './test-good.js'), function (err, data) {
-            if (err) {
-                t.fail(err);
-            } else {
-                str.write(new Vinyl({
-                    base: __dirname,
-                    cwd: path.resolve(__dirname, '../'),
-                    path: path.join(__dirname, 'test-good.js'),
-                    contents: data
-                }));
-            }
-        });
+        t.throws(function () {
+            var str = jslint();
+            str.pipe(jslint.reporter('some-random-ass-reporter'));
+        }, 'Cannot find module \'some-random-ass-reporter\'');
     });
 }());

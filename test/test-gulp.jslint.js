@@ -25,17 +25,15 @@
             test(why, function (t) {
                 t.plan(1);
 
-                // hook in custom reporter
-                dir.reporter = function (evt) {
-                    if (goodCode && evt.pass) {
+                // create stream with custom reporter
+                var str = jslint(dir);
+                str.pipe(jslint.reporter(function (evt) {
+                    if (goodCode && evt.success) {
                         t.ok(true, 'lint passed (' + file + ')');
                     } else {
                         t.ok(!goodCode, 'lint failed (' + file + ')');
                     }
-                };
-
-                // create stream
-                var str = jslint(dir);
+                }));
 
                 // read in sample file
                 fs.readFile(path.resolve(__dirname, './' + file), function (err, data) {
@@ -128,12 +126,11 @@
     test('custom reporter via string', function (t) {
         t.plan(3);
 
-        var str = jslint({
-            reporter: path.resolve(__dirname, './test-reporter.js')
-        });
+        var str = jslint();
+        str.pipe(jslint.reporter(require('./test-reporter')));
 
         str.on('data', function () {
-            t.ok(global.GULP_JSLINT_REPORTER, 'reporter fired');
+            t.ok(!!global.GULP_JSLINT_REPORTER, 'reporter fired');
             t.ok(global.GULP_JSLINT_REPORTER.hasOwnProperty('pass'), 'lint status is in event data');
             t.ok(global.GULP_JSLINT_REPORTER.hasOwnProperty('file'), 'source file is in event data');
         });
@@ -180,11 +177,10 @@
     test('custom bad reporter (object)', function (t) {
         t.plan(4);
 
-        var str = jslint({
-            reporter: {
-                what: 'this object should be ignored'
-            }
-        });
+        var str = jslint();
+        str.pipe(jslint.reporter({
+            what: 'this object should be ignored'
+        }));
 
         str.on('error', function (err) {
             var message = strip(String(err));
@@ -211,9 +207,8 @@
     test('custom bad reporter (missing module)', function (t) {
         t.plan(1);
 
-        var str = jslint({
-            reporter: 'some-random-ass-reporter'
-        });
+        var str = jslint();
+        str.pipe(jslint.reporter('some-random-ass-reporter'));
 
         str.on('error', function () {
             t.ok(true, 'errored out');

@@ -11,7 +11,6 @@
 
     var fs = require('fs'),
         path = require('path'),
-        strip = require('stripcolorcodes'),
         test = require('tape'),
         Vinyl = require('vinyl'),
         jslint = require('../'),

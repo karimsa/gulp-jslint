@@ -18,7 +18,6 @@
     "gulp": "^3.9.1",
     "istanbul": "^0.4.3",
     "rimraf": "2.5.2",
-    "stripcolorcodes": "0.1.0",
     "tape": "^4.5.1",
     "vinyl": "^1.1.1"
   },
@@ -26,7 +25,7 @@
     "pretest": "gulp",
     "test": "npm run coverage && npm run codeclimate && npm run rm",
     "coverage": "istanbul cover test/test-gulp.jslint.js --report lcovonly",
-    "codeclimate": "cat coverage/lcov.info | codeclimate",
+    "codeclimate": "cat coverage/lcov.info | node_modules/.bin/codeclimate",
     "rm": "rimraf coverage"
   },
   "repository": {

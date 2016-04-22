@@ -30,6 +30,10 @@ gulp.task('default', function () {
 });
 ```
 
+If you would like to specify a custom jslint edition to use, set the property 'edition' in your directives object.
+These versions should follow what the package node-jslint expects or this property can be set to a pre-loaded jslint
+function.
+
 ### Directives
 
 All directives being passed to the `jslint()` function are standard JSLint directives (for a list of directives,

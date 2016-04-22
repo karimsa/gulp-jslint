@@ -5,7 +5,6 @@
  *
  * Copyright (C) 2014 Karim Alibhai.
  **/
-/*jslint nomen:true*/
 
 (function () {
     "use strict";
@@ -74,8 +73,7 @@
     lint('with good code', 'test-good.js');
     lint('with bad code', 'test-nomen.js').fail();
     lint('with directives', 'test-nomen.js', {
-        nomen: true,
-        errorsOnly: true
+        nomen: true
     });
     lint('with good code (with shebang)', 'test-shebang.js', {
         node: true

@@ -14,11 +14,13 @@
         test = require('tape'),
         Vinyl = require('vinyl'),
         jslint = require('../'),
-        lint = function (why, file, dir) {
+        nodelint = require('jslint').load('latest'),
+        lint = function (why, file, dir, edition) {
             var goodCode = true;
 
             // directives
             dir = dir || {};
+            dir.edition = edition || 'latest';
 
             // create test
             test(why, function (t) {
@@ -82,6 +84,24 @@
     lint('with good code (given predef)', 'test-jquery.js', {
         predef: ['$']
     });
+
+    // retest lints by explicitally providing the jslint function
+
+    lint('with good code', 'test-good.js', {}, nodelint);
+    lint('with bad code', 'test-nomen.js', {}, nodelint).fail();
+    lint('with directives', 'test-nomen.js', {
+        nomen: true
+    }, nodelint);
+    lint('with good code (with shebang)', 'test-shebang.js', {
+        node: true
+    }, nodelint);
+    lint('with good code (missing globals)', 'test-jquery.js', {}, nodelint).fail();
+    lint('with good code (given globals)', 'test-jquery.js', {
+        global: ['$']
+    }, nodelint);
+    lint('with good code (given predef)', 'test-jquery.js', {
+        predef: ['$']
+    }, nodelint);
 
     test('stream support', function (t) {
         t.plan(1);

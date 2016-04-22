@@ -6,3 +6,4 @@
 'use strict';
 
 module.exports = require('./lib/lint');
+module.exports.reporter = require('./lib/reporter');

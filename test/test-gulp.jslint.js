@@ -15,7 +15,7 @@
         strip = require('stripcolorcodes'),
         test = require('tape'),
         Vinyl = require('vinyl'),
-        jslint = require('../gulp.jslint.js'),
+        jslint = require('../'),
         lint = function (why, file, dir) {
             var goodCode = true;
 

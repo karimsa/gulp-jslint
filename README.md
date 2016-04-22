@@ -3,123 +3,94 @@ It's JSLint for Gulp.js.
 
 [![NPM](https://nodei.co/npm/gulp-jslint.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/gulp-jslint/)
 
+## Table of Contents
+
+ - [Installation](##Installation)
+ - [Usage](##Usage)
+    - [Directives](###Directives)
+ - [Reporters](##Reporters)
+    - [Custom Reporters](###Custom Reporters)
+ - [Support and Licensing](##Support and Licensing)
+
+## Installation
+
+Simply install with npm by running `npm install gulp-jslint`.
+
 ## Usage
-
-To install with npm, simply do:
-
-```
-$ npm install gulp-jslint
-.. installs gulp-jslint ..
-```
-
-Sample gulpfile.js:
 
 ```javascript
 var gulp = require('gulp');
 var jslint = require('gulp-jslint');
 
-// build the main source into the min file
 gulp.task('default', function () {
     return gulp.src(['source.js'])
-
-        // pass your directives
-        // as an object
-        .pipe(jslint({
-            // these directives can
-            // be found in the official
-            // JSLint documentation.
-            node: true,
-            evil: true,
-            nomen: true,
-
-            // you can also set global
-            // declarations for all source
-            // files like so:
-            global: [],
-            predef: [],
-            // both ways will achieve the
-            // same result; predef will be
-            // given priority because it is
-            // promoted by JSLint
-
-            // pass in your prefered
-            // reporter like so:
-            reporter: 'default',
-            // ^ there's no need to tell gulp-jslint
-            // to use the default reporter. If there is
-            // no reporter specified, gulp-jslint will use
-            // its own.
-
-            // specifiy custom jslint edition
-            // by default, the latest edition will
-            // be used
-            edition: '2014-07-08',
-
-            // specify whether or not
-            // to show 'PASS' messages
-            // for built-in reporter
-            errorsOnly: false
-        }))
-
-        // error handling:
-        // to handle on error, simply
-        // bind yourself to the error event
-        // of the stream, and use the only
-        // argument as the error object
-        // (error instanceof Error)
-        .on('error', function (error) {
-            console.error(String(error));
-        });
+            .pipe(jslint({ /* this object represents the JSLint directives being passed down */ }))
+            .pipe(jslint.reporter( 'my-reporter' ));
 });
 ```
 
-When not specified, the default reporter will write a pass/fail message to the console with every file.  If you only wish to see errors, set the `errorsOnly` property to `true`.  *Note:* The `errorsOnly` property only affects the default reporter.
+### Directives
 
-For a list of directives, see [the official JSLint docs](http://www.jslint.com/help.html).
+All directives being passed to the `jslint()` function are standard JSLint directives (for a list of directives,
+see [the official JSLint docs](http://www.jslint.com/help.html)).
 
-### Custom Reporters
-A custom reporter is simply a function that receives a JSON object with 2 properties:
-- `pass`: a boolean (true/false) of whether the lint was successful.
-- `file`: an absolute path to the file.
+However, to supply a list of global variables for your code, use the directive 'predef' or 'global' like so ('global'
+is an alias of 'predef' but 'predef' will be prefered since it is the official JSLint standard):
 
-Sample Gruntfile with a custom reporter:
 ```javascript
-var gulp = require('gulp');
-var jslint = require('gulp-jslint');
-
 gulp.task('default', function () {
-    return gulp.src(['my_source.js'])
+    return gulp.src(['source.js'])
             .pipe(jslint({
-                reporter: function (evt) {
-                    var msg = ' ' + evt.file;
-
-                    if (evt.pass) {
-                        msg = '[PASS]' + msg;
-                    } else {
-                        msg = '[FAIL]' + msg;
-                    }
-
-                    console.log(msg);
-                }
+                predef: [ 'a_global' ],
+                global: [ 'a_global' ]
             }));
 });
 ```
 
-It's probably a good idea to use something like `path.basename()` on the `file` property to avoid lots of garbage in the command-line (i.e. path.basename('/home/user/documents/projects/my-project/index.js') === 'index.js').
+*Please see `gulpfile.js` for a more extensive sample gulpfile.*
 
-## Custom Install
-To build from source, simply do the following:
+## Reporters
 
+By default, two reporters are provided by gulp-jslint. The first is the default reporter (appropriately named 'default')
+and the second report is the popular 'jshint-stylish' (named 'stylish').
+
+To use either of these reporters, provide the name of the reporter followed by whatever arguments they expect to the function
+`jslint.reporter()`.
+
+**For example:**
+
+```javascript
+gulp.task('default', function () {
+    return gulp.src(['source.js'])
+            .pipe(jslint())
+            .pipe(jslint.reporter('default', errorsOnly))
+            .pipe(jslint.reporter('stylish', options));
+});
 ```
-$ git clone https://github.com/karimsa/gulp-jslint.git
-.. clones gulp-jslint ..
-$ cd gulp-jslint
-$ npm install
-.. installs dependencies ..
-$ npm test
-.. lints and tests gulp-jslint code ..
-```
 
-## Support
-Please use the official issues section in GitHub to post issues.
-All forks and helpful comments are much appreciated.
+It's probably a good idea to use something like `path.basename()` on the `file` property to avoid lots of garbage in the
+command-line (i.e. path.basename('/path/to/index.js') === 'index.js').
+
+### Custom Reporters
+
+Custom reporters should be either be synchronous or streams. Either way, the reporter will receive a `results` object and can
+output its report onto the console/logfile the way it wishes.
+
+The results object will contain the following properties:
+
+ - *filename*: the absolute path to the file being linted.
+ - *success*: a boolean value representing whether the linting passed.
+ - *errors*: an array of JSLint errors. Each element will contain the properties:
+    - *name*: the string 'JSLintError'.
+    - *column*: the column number of the error.
+    - *line*: the line number of the error.
+    - *code*: a code relating to the error.
+    - *message*: a message describing the error.
+
+## Support and Licensing
+
+Copyright (C) 2014-2016 Karim Alibhai.
+Code is licensed under the MIT license.
+
+Please use the official issues section in GitHub to post issues or feature requests.
+Stars and helpful comments are much appreciated! :)

@@ -8,11 +8,11 @@
 'use strict';
 
 var gulp = require('gulp'),
-    jslint = require('./gulp-jslint.js');
+    jslint = require('./');
 
 // lint all code
 gulp.task('default', function () {
-    return gulp.src(['gulpfile.js', 'gulp-jslint.js'])
+    return gulp.src(['gulpfile.js', 'index.js', 'lib/**/*.js'])
 
         // pass your directives
         // as an object

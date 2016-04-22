@@ -1,5 +1,5 @@
 /**
- * gulp-jslint.js - gulp-jslint
+ * index.js - gulp-jslint
  * Copyright (C) 2014-2016 Karim Alibhai.
  */
 

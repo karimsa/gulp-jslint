@@ -21,7 +21,7 @@ gulp.task('default', function () {
             // be found in the official
             // JSLint documentation.
             node: true,
-            nomen: true,
+            es6: true,
 
             // you can also set global
             // declarations for all source

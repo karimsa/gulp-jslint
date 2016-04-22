@@ -93,6 +93,9 @@
         });
 
         str.write({
+            isNull: function () {
+                return false;
+            },
             isStream: function () {
                 return true;
             }

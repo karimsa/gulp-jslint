@@ -25,7 +25,7 @@
     "pretest": "gulp",
     "test": "npm run coverage && npm run codeclimate && npm run rm",
     "coverage": "istanbul cover test/test-gulp.jslint.js --report lcovonly",
-    "codeclimate": "cat coverage/lcov.info | node_modules/.bin/codeclimate",
+    "codeclimate": "cat coverage/lcov.info | node_modules/.bin/codeclimate-test-reporter",
     "rm": "rimraf coverage"
   },
   "repository": {

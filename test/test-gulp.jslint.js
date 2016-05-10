@@ -22,6 +22,11 @@
             dir = dir || {};
             dir.edition = edition || 'latest';
 
+            // latest should be chosen automatically
+            if (dir.edition === 'latest') {
+                delete dir.edition;
+            }
+
             // create test
             test(why, function (t) {
                 t.plan(1);

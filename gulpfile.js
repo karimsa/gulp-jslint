@@ -2,7 +2,7 @@
  * gulpfile.js
  * For build instructions, please see README.md.
  *
- * Copyright (C) 2014 KarimSa Networks.
+ * Copyright (C) 2014-2016 Karim Alibhai.
  **/
 
 'use strict';

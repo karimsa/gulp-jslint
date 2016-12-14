@@ -184,8 +184,8 @@
         var str = jslint();
         str.pipe(jslint.reporter('default', true));
         str.on('data', function () {
-          console.log = log;
-          t.ok(true, 'should not print anything');
+            console.log = log;
+            t.ok(true, 'should not print anything');
         });
 
         fs.readFile(path.resolve(__dirname, './test-good.js'), function (err, data) {

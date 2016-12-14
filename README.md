@@ -8,12 +8,12 @@ Supports `node >= 4.x`.
 
 ## Table of Contents
 
- - [Installation](##Installation)
- - [Usage](##Usage)
-    - [Directives](###Directives)
- - [Reporters](##Reporters)
-    - [Custom Reporters](###Custom Reporters)
- - [Support and Licensing](##Support and Licensing)
+ - [Installation](#installation)
+ - [Usage](#usage)
+    - [Directives](#directives)
+ - [Reporters](#reporters)
+    - [Custom Reporters](#custom-reporters)
+ - [Support and Licensing](#support-and-licensing)
 
 ## Installation
 

@@ -1,6 +1,6 @@
 {
   "name": "gulp-jslint",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "The classic and strict javascript lint-tool for gulp.js",
   "main": "index.js",
   "dependencies": {

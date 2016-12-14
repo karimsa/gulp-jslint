@@ -22,11 +22,6 @@
             dir = dir || {};
             dir.edition = edition || 'latest';
 
-            // latest should be chosen automatically
-            if (dir.edition === 'latest') {
-                delete dir.edition;
-            }
-
             // create test
             test(why, function (t) {
                 t.plan(1);
@@ -75,9 +70,9 @@
         };
 
     lint('with good code', 'test-good.js');
-    lint('with bad code', 'test-nomen.js').fail();
-    lint('with directives', 'test-nomen.js', {
-        nomen: true
+    lint('with bad code', 'test-eval.js').fail();
+    lint('with directives', 'test-eval.js', {
+        eval: true
     });
     lint('with good code (with shebang)', 'test-shebang.js', {
         node: true
@@ -93,9 +88,9 @@
     // retest lints by explicitally providing the jslint function
 
     lint('with good code', 'test-good.js', {}, nodelint);
-    lint('with bad code', 'test-nomen.js', {}, nodelint).fail();
-    lint('with directives', 'test-nomen.js', {
-        nomen: true
+    lint('with bad code', 'test-eval.js', {}, nodelint).fail();
+    lint('with directives', 'test-eval.js', {
+        eval: true
     }, nodelint);
     lint('with good code (with shebang)', 'test-shebang.js', {
         node: true

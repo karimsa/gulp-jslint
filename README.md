@@ -4,6 +4,8 @@ It's JSLint for Gulp.js.
 
 [![NPM](https://nodei.co/npm/gulp-jslint.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/gulp-jslint/)
 
+Supports `node >= 4.x`.
+
 ## Table of Contents
 
  - [Installation](##Installation)

@@ -32,8 +32,6 @@
                 str.pipe(jslint.reporter(function (evt) {
                     if (goodCode && evt.success) {
                         t.ok(true, 'lint passed (' + file + ')');
-                    } else {
-                        t.ok(!goodCode, 'lint failed (' + file + ')');
                     }
                 }));
 
@@ -52,12 +50,16 @@
                         });
 
                         // push file into stream
-                        str.write(new Vinyl({
-                            base: __dirname,
-                            cwd: path.resolve(__dirname, '../'),
-                            path: path.join(__dirname, file),
-                            contents: data
-                        }));
+                        try {
+                            str.write(new Vinyl({
+                                base: __dirname,
+                                cwd: path.resolve(__dirname, '../'),
+                                path: path.join(__dirname, file),
+                                contents: data
+                            }));
+                        } catch (error) {
+                            t.ok(!goodCode, 'lint failed (' + file + ')');
+                        }
                     }
                 });
             });
@@ -229,12 +231,14 @@
             if (err) {
                 t.fail(err);
             } else {
-                str.write(new Vinyl({
-                    base: __dirname,
-                    cwd: path.resolve(__dirname, '../'),
-                    path: path.join(__dirname, 'test-eval.js'),
-                    contents: data
-                }));
+                try {
+                    str.write(new Vinyl({
+                        base: __dirname,
+                        cwd: path.resolve(__dirname, '../'),
+                        path: path.join(__dirname, 'test-eval.js'),
+                        contents: data
+                    }));
+                } catch (ignore) {}
             }
         });
     });

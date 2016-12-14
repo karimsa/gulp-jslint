@@ -13,6 +13,7 @@
         path = require('path'),
         test = require('tape'),
         Vinyl = require('vinyl'),
+        stripCodes = require('strip-ansi'),
         jslint = require('../'),
         nodelint = require('jslint').load('latest'),
         lint = function (why, file, dir, edition) {
@@ -141,6 +142,69 @@
             },
             isNull: function () {
                 return true;
+            }
+        });
+    });
+
+    test('default reporter logs success', function (t) {
+        t.plan(1);
+
+        var log = console.log;
+        console.log = function (msg) {
+            console.log = log;
+            t.equal(stripCodes(msg), ' ✓ test-good.js', 'linting passes');
+        };
+
+        var str = jslint();
+        str.pipe(jslint.reporter('default'));
+
+        fs.readFile(path.resolve(__dirname, './test-good.js'), function (err, data) {
+            if (err) {
+                t.fail(err);
+            } else {
+                str.write(new Vinyl({
+                    base: __dirname,
+                    cwd: path.resolve(__dirname, '../'),
+                    path: path.join(__dirname, 'test-good.js'),
+                    contents: data
+                }));
+            }
+        });
+    });
+
+    test('default reporter logs failure', function (t) {
+        t.plan(4);
+
+        var log = console.log, array = [];
+        console.log = function (msg) {
+            array.push(stripCodes(msg));
+            if (array.length === 2) {
+                console.log = log;
+                t.equal(array[0].trim(), '✖ test-eval.js', 'should output file name');
+
+                var parts = array[1].trim().substr(1).split(':').map(function (part) {
+                    return part.trim();
+                });
+
+                t.equal(parts[0], '3', 'should output proper line');
+                t.equal(parts[1], '4', 'should output proper column number');
+                t.equal(parts[2], 'Unexpected \'eval\'.', 'should output proper reason');
+            }
+        };
+
+        var str = jslint();
+        str.pipe(jslint.reporter('default'));
+
+        fs.readFile(path.resolve(__dirname, './test-eval.js'), function (err, data) {
+            if (err) {
+                t.fail(err);
+            } else {
+                str.write(new Vinyl({
+                    base: __dirname,
+                    cwd: path.resolve(__dirname, '../'),
+                    path: path.join(__dirname, 'test-eval.js'),
+                    contents: data
+                }));
             }
         });
     });

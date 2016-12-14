@@ -172,6 +172,36 @@
         });
     });
 
+    test('default reporter hides success (errorsOnly = true)', function (t) {
+        t.plan(1);
+
+        var log = console.log;
+        console.log = function () {
+            console.log = log;
+            t.fail('should not print anything');
+        };
+
+        var str = jslint();
+        str.pipe(jslint.reporter('default', true));
+        str.on('data', function () {
+          console.log = log;
+          t.ok(true, 'should not print anything');
+        });
+
+        fs.readFile(path.resolve(__dirname, './test-good.js'), function (err, data) {
+            if (err) {
+                t.fail(err);
+            } else {
+                str.write(new Vinyl({
+                    base: __dirname,
+                    cwd: path.resolve(__dirname, '../'),
+                    path: path.join(__dirname, 'test-good.js'),
+                    contents: data
+                }));
+            }
+        });
+    });
+
     test('default reporter logs failure', function (t) {
         t.plan(4);
 

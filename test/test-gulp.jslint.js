@@ -57,7 +57,7 @@
                                 path: path.join(__dirname, file),
                                 contents: data
                             }));
-                        } catch (error) {
+                        } catch (ignore) {
                             t.ok(!goodCode, 'lint failed (' + file + ')');
                         }
                     }

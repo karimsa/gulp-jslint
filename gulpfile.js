@@ -12,7 +12,7 @@ var gulp = require('gulp'),
 
 // lint all code
 gulp.task('default', function () {
-    return gulp.src(['gulpfile.js', 'test/test-gulp.jslint.js'])
+    return gulp.src(['gulpfile.js', 'index.js', 'lib/**/*.js', 'test/test-gulp.jslint.js'])
 
         // pass your directives
         // as an object
@@ -21,6 +21,8 @@ gulp.task('default', function () {
             // be found in the official
             // JSLint documentation.
             node: true,
+            es6: false,
+            white: true,
 
             // you can also set global
             // declarations for all source

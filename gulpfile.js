@@ -12,7 +12,7 @@ var gulp = require('gulp'),
 
 // lint all code
 gulp.task('default', function () {
-    return gulp.src(['gulpfile.js', 'index.js', 'lib/**/*.js', 'test/test-gulp.jslint.js'])
+    return gulp.src(['gulpfile.js', 'index.js', 'lib/**/*.js'])
 
         // pass your directives
         // as an object

@@ -14,6 +14,7 @@
         test = require('tape'),
         Vinyl = require('vinyl'),
         stripCodes = require('strip-ansi'),
+        util = require('util'),
         jslint = require('../'),
         nodelint = require('jslint').load('latest'),
         lint = function (why, file, dir, edition) {
@@ -152,9 +153,9 @@
         t.plan(1);
 
         var log = console.log;
-        console.log = function (msg) {
+        console.log = function () {
             console.log = log;
-            t.equal(stripCodes(msg), ' ✓ test-good.js', 'linting passes');
+            t.equal(stripCodes(util.format.apply(util, arguments)), ' ✓ test-good.js', 'linting passes');
         };
 
         var str = jslint();
@@ -208,8 +209,8 @@
         t.plan(4);
 
         var log = console.log, array = [];
-        console.log = function (msg) {
-            array.push(stripCodes(msg));
+        console.log = function () {
+            array.push(stripCodes(util.format.apply(util, arguments)));
             if (array.length === 2) {
                 console.log = log;
                 t.equal(array[0].trim(), '✖ test-eval.js', 'should output file name');

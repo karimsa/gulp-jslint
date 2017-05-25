@@ -94,10 +94,8 @@ The results object will contain the following properties:
     - *code*: a code relating to the error.
     - *message*: a message describing the error.
 
-## Support and Licensing
+## License
 
-Copyright (C) 2014-2016 Karim Alibhai.
-Code is licensed under the MIT license.
+Licensed under MIT license.
 
-Please use the official issues section in GitHub to post issues or feature requests.
-Stars and helpful comments are much appreciated! :)
+Copyright &copy; 2017 Karim Alibhai.
